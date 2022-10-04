@@ -1,15 +1,18 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import {removeQuote,upvoteQuote,downvoteQuote} from "./quotesSlice";
 
-function QuoteCard(props) {
+function QuoteCard({author, content, votes, id}) {
+  let dispatch=useDispatch();
   return (
-    <div>
+    <div key={id}>
       <div className="card card-inverse card-success card-primary mb-3 text-center">
         <div className="card-block">
           <blockquote className="card-blockquote">
-            <p>{/*Render Quote Content*/}</p>
+            <p>{content}</p>
             <footer>
               - author{" "}
-              <cite title="Source Title">{/*Render Quote Author*/}</cite>
+              <cite title="Source Title">{author}</cite>
             </footer>
           </blockquote>
         </div>
@@ -19,17 +22,17 @@ function QuoteCard(props) {
             role="group"
             aria-label="Basic example"
           >
-            <button type="button" className="btn btn-primary">
+            <button onClick={()=>dispatch(upvoteQuote(id))} type="button" className="btn btn-primary" >
               Upvote
             </button>
-            <button type="button" className="btn btn-secondary">
+            <button onClick={()=>dispatch(downvoteQuote(id))} type="button" className="btn btn-secondary">
               Downvote
             </button>
-            <button type="button" className="btn btn-danger">
+            <button onClick={()=>dispatch(removeQuote(id))} type="button" className="btn btn-danger">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div>Votes: {/*Render Quote Votes*/}</div>
+          <div>Votes: {votes}</div>
         </div>
       </div>
     </div>
